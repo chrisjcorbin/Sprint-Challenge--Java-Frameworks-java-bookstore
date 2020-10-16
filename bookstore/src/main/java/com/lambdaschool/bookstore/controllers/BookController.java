@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,6 +52,7 @@ public class BookController
                                     HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     // POST http://localhost:2019/books/book
     @PostMapping(value = "/book", consumes = "application/json")
     public ResponseEntity<?> addNewBook(@Valid @RequestBody Book newBook) throws
@@ -72,6 +74,7 @@ public class BookController
                                     HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     // PUT http://localhost:2019/books/book/1
     @PutMapping(value = "/book/{bookid}",
             consumes = "application/json")
@@ -88,6 +91,7 @@ public class BookController
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     // DELETE http://localhost:2019/books/book/1
     @DeleteMapping(value = "/book/{id}")
     public ResponseEntity<?> deleteBookById(
